@@ -1,0 +1,28 @@
+https://app.unpkg.com/esbuild@0.24.0
+
+https://app.unpkg.com/@esbuild/linux-x64@0.27.7
+https://app.unpkg.com/@esbuild/linux-arm64@0.28.0
+
+https://app.unpkg.com/@esbuild/win32-ia32@0.28.0
+https://app.unpkg.com/@esbuild/win32-x64@0.28.0
+https://app.unpkg.com/@esbuild/win32-arm64@0.28.0
+
+
+
+
+
+Intel-basiert: 
+https://app.unpkg.com/@esbuild/darwin-x64@0.28.0
+
+Apple Silicon (M1/M2/M3): 
+@esbuild/darwin-arm64
+https://app.unpkg.com/@esbuild/darwin-arm64@0.28.0
+
+<ItemGroup>
+  <EmbeddedResource Include="runtimes\win-x64\esbuild.exe" LogicalName="esbuild_win_x64.exe" />
+  <EmbeddedResource Include="runtimes\win-arm64\esbuild.exe" LogicalName="esbuild_win_arm64.exe" />
+  <EmbeddedResource Include="runtimes\linux-x64\esbuild" LogicalName="esbuild_linux_x64" />
+  <EmbeddedResource Include="runtimes\linux-arm64\esbuild" LogicalName="esbuild_linux_arm64" />
+  <EmbeddedResource Include="runtimes\darwin-x64\esbuild" LogicalName="esbuild_darwin_x64" />
+  <EmbeddedResource Include="runtimes\darwin-arm64\esbuild" LogicalName="esbuild_darwin_arm64" />
+</ItemGroup>
