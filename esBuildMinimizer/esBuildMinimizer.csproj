@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="esBuild\runtimes\sources.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="esBuild\runtimes\darwin\amd64\esbuild" />
+    <EmbeddedResource Include="esBuild\runtimes\darwin\arm64\esbuild" />
+    <EmbeddedResource Include="esBuild\runtimes\linux\amd64\esbuild" />
+    <EmbeddedResource Include="esBuild\runtimes\linux\arm64\esbuild" />
+    <EmbeddedResource Include="esBuild\runtimes\windows\amd64\esbuild.exe" />
+    <EmbeddedResource Include="esBuild\runtimes\windows\arm64\esbuild.exe" />
+    <EmbeddedResource Include="esBuild\runtimes\windows\x86\esbuild.exe" />
+  </ItemGroup>
+
+</Project>

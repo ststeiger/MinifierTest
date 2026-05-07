@@ -1,5 +1,5 @@
 ﻿
-namespace MinifierTest
+namespace esBuildMinimizer
 {
 
 
@@ -111,7 +111,8 @@ namespace MinifierTest
         } // End Sub AddToCurrentProcessPath 
 
 
-        internal static System.Threading.Tasks.Task WaitForExitAsync(
+        internal static System.Threading.Tasks.Task 
+            WaitForExitAsync(
             this System.Diagnostics.Process process
         )
         {

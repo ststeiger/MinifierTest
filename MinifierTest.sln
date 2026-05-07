@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinifierTest", "MinifierTest\MinifierTest.csproj", "{47DE0B93-8D5C-4CD7-A960-B5FFBE2F61DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinifierTestCore", "MinifierTestCore\MinifierTestCore.csproj", "{6C9B8404-2254-4333-AC9E-537CEC930E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "esBuildMinimizer", "esBuildMinimizer\esBuildMinimizer.csproj", "{48666C7D-67B3-4C9A-B963-6D9C323D4E05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{47DE0B93-8D5C-4CD7-A960-B5FFBE2F61DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47DE0B93-8D5C-4CD7-A960-B5FFBE2F61DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47DE0B93-8D5C-4CD7-A960-B5FFBE2F61DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9B8404-2254-4333-AC9E-537CEC930E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9B8404-2254-4333-AC9E-537CEC930E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9B8404-2254-4333-AC9E-537CEC930E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9B8404-2254-4333-AC9E-537CEC930E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48666C7D-67B3-4C9A-B963-6D9C323D4E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48666C7D-67B3-4C9A-B963-6D9C323D4E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48666C7D-67B3-4C9A-B963-6D9C323D4E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48666C7D-67B3-4C9A-B963-6D9C323D4E05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

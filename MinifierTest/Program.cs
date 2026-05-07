@@ -2,6 +2,8 @@
 namespace MinifierTest
 {
 
+    using esBuildMinimizer;
+
 
     internal class Program
     {
@@ -29,9 +31,7 @@ namespace MinifierTest
             System.Console.WriteLine(msContent);
 
 
-
-
-            string esBuildDirectory = @"D:\username\Documents\Visual Studio 2022\gitlab\MinifierTest\MinifierTest\runtimes\windows\amd64\";
+            string esBuildDirectory = @"D:\username\Documents\Visual Studio 2022\gitlab\MinifierTest\esBuildMinimizer\esBuild\runtimes\windows\amd64\";
             string esContent2 = await EsBuildPipeRunner.MinifyWithSystemBinaryAsync(originalFileContent, SourceMapMode.None, esBuildDirectory);
             System.Console.WriteLine(esContent2);
 

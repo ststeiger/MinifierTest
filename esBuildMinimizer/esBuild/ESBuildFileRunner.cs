@@ -1,5 +1,5 @@
 ﻿
-namespace MinifierTest
+namespace esBuildMinimizer
 {
 
 
