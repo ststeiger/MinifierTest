@@ -1,13 +1,10 @@
-﻿
-using System.Linq;
-
-namespace MinifierTestCore;
+﻿namespace MinifierTestCore;
 
 internal class Program
 {
-
-
-    internal static async System.Threading.Tasks.Task<int> 
+    
+    
+    internal static async System.Threading.Tasks.Task<int>
         Main(string[] args)
     {
         // await TestAzureKeyVault.TestUnimplemented();
@@ -29,16 +26,12 @@ internal class Program
         // var a = FileSystemScanner.EnumerateFilesLinkedListOrder(path);
         // var a = FileSystemScanner.EnumerateFilesNoReverse(path);
         var a = FileSystemScanner.EnumerateFilesSafe(path);
-        string list = string.Join(System.Environment.NewLine, a.ToList());
+        string list = string.Join(System.Environment.NewLine, System.Linq.Enumerable.ToList(a));
         System.Console.WriteLine(list);
-
-
-
-
-
-    await System.Console.Out.WriteLineAsync("-- - Press any key to continue --- ");
+        
+        await System.Console.Out.WriteLineAsync("-- - Press any key to continue --- ");
         return 0;
-    } // End Task Main 
-
-
+    } // End Task Main
+    
+    
 } // End Class Program 
