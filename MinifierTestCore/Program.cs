@@ -4,8 +4,7 @@ internal class Program
 {
     
     
-    internal static async System.Threading.Tasks.Task<int>
-        Main(string[] args)
+    internal static async System.Threading.Tasks.Task<int> Main(string[] args)
     {
         // await TestAzureKeyVault.TestUnimplemented();
 
@@ -15,17 +14,20 @@ internal class Program
         // await TestAzureKeyVault.TestKeyOperations();
         // await esBuildTests.Test();
 
-        // await BundlerForAI.Test();
+        await BundlerForAI.Test();
 
 
         string path = @"D:\inetpub";
-        // var a = FileSystemScanner.EnumerateFilesRecursive(path);
-        // var a = FileSystemScanner.EnumerateFilesQueue(path);
-        // var a = FileSystemScanner.EnumerateFilesRecursiveOrdered(path);
-        // var a = FileSystemScanner.EnumerateFilesLinkedList(path);
-        // var a = FileSystemScanner.EnumerateFilesLinkedListOrder(path);
-        // var a = FileSystemScanner.EnumerateFilesNoReverse(path);
-        var a = FileSystemScanner.EnumerateFilesSafe(path);
+
+        System.Collections.Generic.IEnumerable<string>? a = null;
+
+        // a = FileSystemScanner.EnumerateFilesRecursive(path);
+        // a = FileSystemScanner.EnumerateFilesQueueReorder(path);
+        // a = FileSystemScanner.EnumerateFilesRecursiveOrdered(path);
+        // a = FileSystemScanner.EnumerateFilesLinkedList(path);
+        // a = FileSystemScanner.EnumerateFilesLinkedListOrder(path);
+        // a = FileSystemScanner.EnumerateFilesNoReverse(path);
+        a = FileSystemScanner.EnumerateFilesSafe(path);
         string list = string.Join(System.Environment.NewLine, System.Linq.Enumerable.ToList(a));
         System.Console.WriteLine(list);
         
