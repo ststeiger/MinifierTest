@@ -6,6 +6,22 @@ namespace MinifierTestCore
     public static class FileSystemScanner
     {
 
+        internal static void Test()
+        {
+            string path = @"D:\inetpub";
+            System.Collections.Generic.IEnumerable<string>? a = null;
+
+            a = FileSystemScanner.EnumerateFilesRecursive(path);
+            a = FileSystemScanner.EnumerateFilesQueueReorder(path);
+            a = FileSystemScanner.EnumerateFilesRecursiveOrdered(path);
+            a = FileSystemScanner.EnumerateFilesLinkedList(path);
+            a = FileSystemScanner.EnumerateFilesLinkedListOrder(path);
+            a = FileSystemScanner.EnumerateFilesNoReverse(path);
+            a = FileSystemScanner.EnumerateFilesSafe(path);
+            string list = string.Join(System.Environment.NewLine, System.Linq.Enumerable.ToList(a));
+            System.Console.WriteLine(list);
+        } // End Sub Test 
+
 
         public static System.Collections.Generic.IEnumerable<string> EnumerateFilesRecursive(string rootPath)
         {

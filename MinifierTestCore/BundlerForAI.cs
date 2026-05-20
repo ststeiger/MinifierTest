@@ -49,6 +49,78 @@ namespace MinifierTestCore
         } // End Function CombineLists 
 
 
+
+
+        private static readonly System.Collections.Generic.HashSet<string> ExcludedNames = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+        {
+            ".env", ".env.local", ".env.production", ".env.development",
+            "appsettings.Production.json", "secrets.json"
+        };
+
+        private static readonly System.Collections.Generic.HashSet<string> ExcludedExtensions = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+        {
+            ".log", ".tmp", ".temp", ".cache", ".suo", ".user", ".pdb",
+            ".exe", ".dll", ".so", ".dylib", ".pem", ".key", ".pfx",
+            ".bak", ".backup", ".old"
+        };
+
+        private static readonly string[] ExcludedPathContains = new[]
+        {
+            "/bin/", "/obj/", "/.git/", "/node_modules/", "/.vs/",
+            "/dist/", "/build/", "/Release/", "/Debug/", "/logs/",
+            "/coverage/", "/test-results/", "/vendor/"
+        };
+
+        private static bool SafeFilter(string path)
+        {
+            string fileName = System.IO.Path.GetFileName(path);
+            string ext = System.IO.Path.GetExtension(path);
+            string lowerPath = path.Replace('\\', '/').ToLowerInvariant();
+
+            // Name komplett ausschließen
+            // Assuming ExcludedNames is a List or HashSet; using the instance method Contains
+            if (ExcludedNames.Contains(fileName))
+                return false;
+
+            // Erweiterung ausschließen
+            if (ExcludedExtensions.Contains(ext))
+                return false;
+
+            // Pfad enthält verbotene Ordner
+            // Replaced .Any() with a foreach loop
+            foreach (string forbidden in ExcludedPathContains)
+            {
+                if (lowerPath.Contains(forbidden))
+                {
+                    return false;
+                }
+            }
+
+            // Versteckte Dateien/Ordner (außer .cs, .js etc.)
+            if (fileName.StartsWith("."))
+            {
+                string[] allowedExtensions = new string[] { ".cs", ".js", ".ts", ".html", ".css" };
+                bool isAllowedExt = false;
+
+                // Replaced .Contains() with a manual loop
+                foreach (string allowed in allowedExtensions)
+                {
+                    if (ext == allowed)
+                    {
+                        isAllowedExt = true;
+                        break;
+                    }
+                }
+
+                if (!isAllowedExt)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+
         /// <summary>
         /// A Linux-secure file crawler that uses a delegate to decide which files to include.
         /// </summary>
@@ -124,7 +196,7 @@ namespace MinifierTestCore
         } // End Task BundleFiles 
 
 
-        public async static System.Threading.Tasks.Task Test()
+        public async static System.Threading.Tasks.Task BundleMobile2()
         {
             // Usage:
             // dotnet run "C:\path\to\js-folder" "output.txt"
@@ -191,6 +263,45 @@ namespace MinifierTestCore
             System.Globalization.CultureInfo culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.InvariantCulture.Clone();
             culture.NumberFormat.NumberGroupSeparator = "'";
             System.Console.Write($"Bundled {jsFiles.Count} ({bundleCotnent.Length.ToString("N0", culture)} bytes) JS files into: ");
+            System.Console.WriteLine(outputFile);
+        } // End Task BundleMobile2 
+
+
+        public async static System.Threading.Tasks.Task Test()
+        {
+            string sourceFolder = @"D:\Repositories\Projects\hmailserver\hmailserver\source\Server";
+            string outputFile = System.IO.Path.Combine(ProjectDirectory, "bundle.txt");
+
+
+            System.Collections.Generic.HashSet<string> excludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+            FileFilterDelegate allFiles = delegate (string path)
+            {
+                string ext = System.IO.Path.GetExtension(path);
+                string name = System.IO.Path.GetFileName(path);
+
+                // 1. Check extension (Case-insensitive for Linux support)
+                // bool isHtml = string.Equals(ext, ".htm", System.StringComparison.OrdinalIgnoreCase);
+                // isHtml = isHtml | string.Equals(ext, ".html", System.StringComparison.OrdinalIgnoreCase);
+                // if (!isHtml) return false;
+
+                if (excludedSet.Contains(name))
+                    return false;
+
+                return true;
+            };
+
+
+            // Get all files initially
+            System.Collections.Generic.List<string> âllFiles = GetFilesCustom(sourceFolder, allFiles);
+
+            string bundleCotnent = await BundleFiles(sourceFolder, false, âllFiles);
+
+            await System.IO.File.WriteAllTextAsync(outputFile, bundleCotnent, System.Text.Encoding.UTF8);
+
+            System.Globalization.CultureInfo culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.InvariantCulture.Clone();
+            culture.NumberFormat.NumberGroupSeparator = "'";
+            System.Console.Write($"Bundled {âllFiles.Count} ({bundleCotnent.Length.ToString("N0", culture)} bytes) JS files into: ");
             System.Console.WriteLine(outputFile);
         } // End Task Test 
 
