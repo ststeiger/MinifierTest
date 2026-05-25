@@ -1,4 +1,7 @@
 ﻿
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+
 namespace MinifierTestCore
 { 
 
@@ -267,11 +270,78 @@ namespace MinifierTestCore
         } // End Task BundleMobile2 
 
 
+
+        public async static System.Threading.Tasks.Task BundleKeyVaultEmulator()
+        {
+            string sourceFolder = @"D:\stefan.steiger\Documents\Visual Studio 2022\github\azure-keyvault-emulator\AzureKeyVaultEmulator";
+            string outputFile = System.IO.Path.Combine(ProjectDirectory, "bundle.txt");
+
+            System.Collections.Generic.HashSet<string> excludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+            { 
+                "launchSettings.json",
+                "project.assets.json",
+                "appsettings.Development.json"
+            };
+
+            FileFilterDelegate allFiles = delegate (string path)
+            {
+                string ext = System.IO.Path.GetExtension(path);
+                string name = System.IO.Path.GetFileName(path);
+
+                // 1. Check extension (Case-insensitive for Linux support)
+                bool includeFile = string.Equals(ext, ".cs", System.StringComparison.OrdinalIgnoreCase);
+                includeFile = includeFile | string.Equals(ext, ".json", System.StringComparison.OrdinalIgnoreCase);
+                includeFile = includeFile | string.Equals(ext, ".csproj", System.StringComparison.OrdinalIgnoreCase);
+
+                if (name.EndsWith(".deps.json", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+
+                if (name.EndsWith("nuget.dgspec.json", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+                if (path.Contains("bin\\Debug\\net", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+                if (path.Contains("bin\\Release\\net", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+                if (path.Contains("obj\\Debug\\net", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+                if (path.Contains("obj\\Release\\net", System.StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+
+
+                if (excludedSet.Contains(name)) return false;
+
+                return includeFile;
+            };
+
+
+            // Get all files initially
+            System.Collections.Generic.List<string> âllFiles = GetFilesCustom(sourceFolder, allFiles);
+
+            string bundleContent = await BundleFiles(sourceFolder, false, âllFiles);
+            
+            string pattern = System.Text.RegularExpressions.Regex.Escape(System.Environment.UserName);
+            bundleContent = System.Text.RegularExpressions.Regex.Replace(
+                bundleContent, 
+                pattern, 
+                "username",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase
+            );
+
+            await System.IO.File.WriteAllTextAsync(outputFile, bundleContent, System.Text.Encoding.UTF8);
+
+        }
+
+
         public async static System.Threading.Tasks.Task Test()
         {
             string sourceFolder = @"D:\Repositories\Projects\hmailserver\hmailserver\source\Server";
             string outputFile = System.IO.Path.Combine(ProjectDirectory, "bundle.txt");
-
 
             System.Collections.Generic.HashSet<string> excludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
 

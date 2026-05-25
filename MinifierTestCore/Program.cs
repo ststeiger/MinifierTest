@@ -1,4 +1,6 @@
-﻿namespace MinifierTestCore;
+﻿using Azure.Security.KeyVault.Keys;
+
+namespace MinifierTestCore;
 
 internal class Program
 {
@@ -8,18 +10,29 @@ internal class Program
     {
         // await TestAzureKeyVault.TestUnimplemented();
 
-        // await TestAzureKeyVault.TestSet();
-        // await TestAzureKeyVault.TestGet();
+        await TestAzureKeyVault.TestGet();
+        await TestAzureKeyVault.TestSet();
+        await TestAzureKeyVault.TestGet();
 
-        // await TestAzureKeyVault.TestKeyOperations();
+        await TestAzureKeyVault.TestListSecrets();
+        await TestAzureKeyVault.TestListSecretVersions("MyNewConnectionSecret");
+        await TestAzureKeyVault.DeleteSecret("MyNewConnectionSecret");
+        await TestAzureKeyVault.DeleteKey("MyCryptoKey");
+
+
+        await TestAzureKeyVault.TestKeyOperations();
+        await TestAzureKeyVault.TestListKeyAsync();
+        await TestAzureKeyVault.TestListKeyVersionsAsync("MyCryptoKey");
+
         // await esBuildTests.Test();
 
         // FileSystemScanner.Test();
 
         // await BundlerForAI.BundleMobile2();
-        await BundlerForAI.Test();
+        // await BundlerForAI.Test();
+        // await BundlerForAI.BundleKeyVaultEmulator();
 
-        
+
 
         await System.Console.Out.WriteLineAsync("-- - Press any key to continue --- ");
         return 0;
