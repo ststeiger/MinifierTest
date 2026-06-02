@@ -222,7 +222,7 @@ namespace MinifierTestCore
                 if (!isJs)
                     return false;
 
-                if (jsExcludedSet.Contains(name)) 
+                if (jsExcludedSet.Contains(name))
                     return false;
 
                 return true;
@@ -244,7 +244,7 @@ namespace MinifierTestCore
                 if (!isHtml)
                     return false;
 
-                if (htmlExcludedSet.Contains(name)) 
+                if (htmlExcludedSet.Contains(name))
                     return false;
 
                 return true;
@@ -265,6 +265,78 @@ namespace MinifierTestCore
             System.Console.Write($"Bundled {jsFiles.Count} ({bundleCotnent.Length.ToString("N0", culture)} bytes) JS files into: ");
             System.Console.WriteLine(outputFile);
         } // End Task BundleMobile2 
+
+
+
+        public async static System.Threading.Tasks.Task BundleDbAdmin()
+        {
+            // Usage:
+            // dotnet run "C:\path\to\js-folder" "output.txt"
+            string sourceFolder = @"D:\username\Downloads\DbAdmin\DbAdmin";
+            string outputFile = System.IO.Path.Combine(ProjectDirectory, "bundle.txt");
+
+
+            // List of files to exclude from the bundle(
+            System.Collections.Generic.HashSet<string> jsExcludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+            {
+                "DbAdmin.csproj",
+                "appsettings.json",
+                "README.md"
+            };
+
+            FileFilterDelegate allJsFiles = delegate (string path)
+            {
+                string ext = System.IO.Path.GetExtension(path);
+                string name = System.IO.Path.GetFileName(path);
+
+                // 1. Check extension (Case-insensitive for Linux support)
+                bool isCs = string.Equals(ext, ".cs", System.StringComparison.OrdinalIgnoreCase);
+                if (!isCs)
+                    return false;
+
+                if (jsExcludedSet.Contains(name))
+                    return false;
+
+                return true;
+            };
+
+
+            // System.Collections.Generic.List<string> htmlExcludedList = new System.Collections.Generic.List<string>();
+            System.Collections.Generic.HashSet<string> htmlExcludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+            FileFilterDelegate allHtmlFiles = delegate (string path)
+            {
+                string ext = System.IO.Path.GetExtension(path);
+                string name = System.IO.Path.GetFileName(path);
+
+                // 1. Check extension (Case-insensitive for Linux support)
+                bool isHtml = string.Equals(ext, ".htm", System.StringComparison.OrdinalIgnoreCase);
+                isHtml = isHtml | string.Equals(ext, ".html", System.StringComparison.OrdinalIgnoreCase);
+
+                if (!isHtml)
+                    return false;
+
+                if (htmlExcludedSet.Contains(name))
+                    return false;
+
+                return true;
+            };
+
+            // Get all files initially
+            System.Collections.Generic.List<string> jsFiles = GetFilesCustom(sourceFolder, allJsFiles);
+            // System.Collections.Generic.List<string> htmlFiles = GetFilesCustom(sourceFolder, allHtmlFiles);
+
+            string bundleCotnent = await BundleFiles(sourceFolder, false, jsFiles, new string[] {
+                @"D:\username\Documents\Visual Studio 2022\TFS\COR-CAFM-V4\CAFM\CAFM\Modules\Mobile2\index.html"
+            });
+
+            await System.IO.File.WriteAllTextAsync(outputFile, bundleCotnent, System.Text.Encoding.UTF8);
+
+            System.Globalization.CultureInfo culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.InvariantCulture.Clone();
+            culture.NumberFormat.NumberGroupSeparator = "'";
+            System.Console.Write($"Bundled {jsFiles.Count} ({bundleCotnent.Length.ToString("N0", culture)} bytes) JS files into: ");
+            System.Console.WriteLine(outputFile);
+        } // End Task BundleDbAdmin
 
 
 

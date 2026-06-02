@@ -1,5 +1,4 @@
-﻿using Azure.Security.KeyVault.Keys;
-
+﻿
 namespace MinifierTestCore;
 
 internal class Program
@@ -8,6 +7,8 @@ internal class Program
     
     internal static async System.Threading.Tasks.Task<int> Main(string[] args)
     {
+        await BundlerForAI.BundleDbAdmin();
+
         // await TestAzureKeyVault.TestUnimplemented();
 
         await TestAzureKeyVault.TestGet();
@@ -28,6 +29,7 @@ internal class Program
 
         // FileSystemScanner.Test();
 
+        
         // await BundlerForAI.BundleMobile2();
         // await BundlerForAI.Test();
         // await BundlerForAI.BundleKeyVaultEmulator();
