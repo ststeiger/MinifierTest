@@ -7,8 +7,6 @@ internal class Program
     
     internal static async System.Threading.Tasks.Task<int> Main(string[] args)
     {
-        await BundlerForAI.BundleDbAdmin();
-
         // await TestAzureKeyVault.TestUnimplemented();
 
         await TestAzureKeyVault.TestGet();
@@ -29,7 +27,9 @@ internal class Program
 
         // FileSystemScanner.Test();
 
-        
+        // await BundlerForAI.BundleDynamicSNI();
+        // await BundlerForAI.BundleDbAdmin();
+
         // await BundlerForAI.BundleMobile2();
         // await BundlerForAI.Test();
         // await BundlerForAI.BundleKeyVaultEmulator();

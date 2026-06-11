@@ -267,6 +267,58 @@ namespace MinifierTestCore
         } // End Task BundleMobile2 
 
 
+        public async static System.Threading.Tasks.Task BundleDynamicSNI()
+        {
+            // Usage:
+            // dotnet run "C:\path\to\js-folder" "output.txt"
+            string sourceFolder = @"D:\username\Documents\Visual Studio 2022\gitlab\DynamicSNI\DynamicSni\Code\SelfSignedCertificate";
+            string outputFile = System.IO.Path.Combine(ProjectDirectory, "bundle.txt");
+
+
+            // List of files to exclude from the bundle(
+            System.Collections.Generic.HashSet<string> csExcludedSet = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase)
+            {
+                "DbAdmin.csproj",
+                "appsettings.json",
+                "README.md"
+            };
+
+            FileFilterDelegate allCsFiles = delegate (string path)
+            {
+                string ext = System.IO.Path.GetExtension(path);
+                string name = System.IO.Path.GetFileName(path);
+
+                // 1. Check extension (Case-insensitive for Linux support)
+                bool isCs = string.Equals(ext, ".cs", System.StringComparison.OrdinalIgnoreCase);
+                if (!isCs)
+                    return false;
+
+                if (csExcludedSet.Contains(name))
+                    return false;
+
+                return true;
+            };
+
+            // Get all files initially
+            System.Collections.Generic.List<string> jsFiles = 
+                GetFilesCustom(sourceFolder, allCsFiles);
+            // System.Collections.Generic.List<string> htmlFiles = GetFilesCustom(sourceFolder, allHtmlFiles);
+
+            string bundleCotnent = await BundleFiles(
+                sourceFolder, 
+                false, 
+                jsFiles
+                // ,new string[] { @"D:\username\Documents\Visual Studio 2022\TFS\COR-CAFM-V4\CAFM\CAFM\Modules\Mobile2\index.html" }
+            );
+
+            await System.IO.File.WriteAllTextAsync(outputFile, bundleCotnent, System.Text.Encoding.UTF8);
+
+            System.Globalization.CultureInfo culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.InvariantCulture.Clone();
+            culture.NumberFormat.NumberGroupSeparator = "'";
+            System.Console.Write($"Bundled {jsFiles.Count} ({bundleCotnent.Length.ToString("N0", culture)} bytes) JS files into: ");
+            System.Console.WriteLine(outputFile);
+        } // End Task BundleDynamicSNI
+
 
         public async static System.Threading.Tasks.Task BundleDbAdmin()
         {
