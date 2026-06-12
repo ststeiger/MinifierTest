@@ -7,6 +7,9 @@ internal class Program
     
     internal static async System.Threading.Tasks.Task<int> Main(string[] args)
     {
+        await BundlerForAI.BundleKeyVaultSQL();
+
+
         // await TestAzureKeyVault.TestUnimplemented();
 
         await TestAzureKeyVault.TestGet();
