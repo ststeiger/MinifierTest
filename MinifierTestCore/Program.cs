@@ -7,12 +7,13 @@ internal class Program
     
     internal static async System.Threading.Tasks.Task<int> Main(string[] args)
     {
-        await BundlerForAI.BundleKeyVaultSQL();
+
+        await BundlerForAI.BundleProtocolsAdBrowser();
 
 
         // await TestAzureKeyVault.TestUnimplemented();
 
-        await TestAzureKeyVault.TestGet();
+         await TestAzureKeyVault.TestGet();
         await TestAzureKeyVault.TestSet();
         await TestAzureKeyVault.TestGet();
 
@@ -36,6 +37,9 @@ internal class Program
         // await BundlerForAI.BundleMobile2();
         // await BundlerForAI.Test();
         // await BundlerForAI.BundleKeyVaultEmulator();
+        // await BundlerForAI.BundleKeyVaultSQL();
+
+
 
 
 
